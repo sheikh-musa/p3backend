@@ -3,7 +3,13 @@ const app = express();
 const auth = require("./auth");
 const cors = require("cors");
 
-app.use(cors({ origin: "https://sheikh-musa.github.io/" }));
+app.use(
+	cors({
+		origin: "*",
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		allowedHeaders: "Origin,Content-Type,X-Auth-Token",
+	})
+);
 app.use(express.json());
 
 const board = require("./board.route");
