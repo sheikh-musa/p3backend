@@ -3,7 +3,7 @@ const app = express();
 const auth = require("./auth");
 const cors = require("cors");
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "https://sheikh-musa.github.io/" }));
 app.use(express.json());
 
 const board = require("./board.route");
