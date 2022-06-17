@@ -15,9 +15,11 @@ app.use(express.json());
 const board = require("./board.route");
 const login = require("./login.route");
 const register = require("./register.route");
+const update = require("./update.route");
 
 app.use("/board", auth, board);
 app.use("/login", login);
 app.use("/register", register);
+app.use("/update", update);
 
 module.exports = app;

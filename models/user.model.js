@@ -80,6 +80,14 @@ User.init(
 			type: DataTypes.DATE,
 			field: "updatedAt",
 		},
+		firstName: {
+			type: DataTypes.STRING,
+			field: "firstName",
+		},
+		lastName: {
+			type: DataTypes.STRING,
+			field: "lastName",
+		},
 	},
 	// Model config
 	{
