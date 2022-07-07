@@ -32,8 +32,11 @@ class UserController {
 	}
 
 	async register(req, res) {
-		const { email, password, username, firstName, lastName } = req.body;
-
+		const { email, password, passwordRepeat, username, firstName, lastName } = req.body;
+		if (password !== passwordRepeat) {
+			console.log(password, passwordRepeat);
+			return res.status(400).json({ message: "Passwords do not match" });
+		}
 		if (
 			!(
 				email &&
