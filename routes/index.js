@@ -19,7 +19,8 @@ const update = require("./update.route");
 const addCard = require("./board.route");
 const removeCard = require("./board.route");
 
-app.use("/board", auth, board);
+// app.use("/board", auth, board);
+app.use("/board", board);
 app.use("/login", login);
 app.use("/register", register);
 app.use("/update", update);

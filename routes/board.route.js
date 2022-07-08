@@ -4,7 +4,7 @@ const BoardController = require("../controllers/board.controller");
 const boardcontroller = new BoardController();
 
 router.put("/", boardcontroller.updateBoard);
-router.put("/add", boardcontroller.addCard);
-router.put("/remove", boardcontroller.removeCard);
+router.post("/add", boardcontroller.addCard);
+// router.delete("/remove", boardcontroller.removeCard);
 
 module.exports = router;
