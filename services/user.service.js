@@ -4,36 +4,6 @@ const hash = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
-	login: async (login, password) => {
-		const result = {
-			status: null,
-			message: null,
-			data: null,
-		};
-		try {
-			console.log(login);
-			let user =
-				(await User.findOne({ where: { email: login } })) ||
-				(await User.findOne({ where: { username: login } }));
-			if (user && (await bcrypt.compare(password, user.password))) {
-				const token = jwt.sign({ user_id: user._id, login }, process.env.TOKEN_KEY, {
-					expiresIn: "2h",
-				});
-				user.token = token;
-
-				result.status = 200;
-				result.message = "Login successful";
-				result.data = user;
-				return result;
-			}
-			result.status = 400;
-			result.message = "Invalid credentials";
-			return result;
-		} catch (err) {
-			console.log("user login error caught", err);
-		}
-	},
-
 	register: async (email, username, password, firstName, lastName) => {
 		const result = {
 			status: null,
@@ -67,16 +37,6 @@ module.exports = {
 				lastName: lastName,
 			});
 
-			const token = jwt.sign(
-				{
-					user_id: user._id,
-					email,
-				},
-				process.env.TOKEN_KEY,
-				{ expiresIn: "2h" }
-			);
-			user.token = token;
-
 			result.status = 200;
 			result.message = "New account register successful";
 			result.data = user;
@@ -85,8 +45,38 @@ module.exports = {
 		} catch (err) {
 			console.log("user create error caught", err);
 			result.status = 400;
-			result.message = "Invalid email address";
+			result.message = err.message;
 			return result;
+		}
+	},
+
+	login: async (login, password) => {
+		const result = {
+			status: null,
+			message: null,
+			data: null,
+		};
+		try {
+			console.log(login);
+			let user =
+				(await User.findOne({ where: { email: login } })) ||
+				(await User.findOne({ where: { username: login } }));
+			if (user && (await bcrypt.compare(password, user.password))) {
+				const token = jwt.sign({ user_id: user._id, login }, process.env.TOKEN_KEY, {
+					expiresIn: "2h",
+				});
+				user.token = token;
+
+				result.status = 200;
+				result.message = "Login successful";
+				result.data = user;
+				return result;
+			}
+			result.status = 400;
+			result.message = "Invalid credentials";
+			return result;
+		} catch (err) {
+			console.log("user login error caught", err);
 		}
 	},
 
