@@ -1,14 +1,14 @@
 const User = require("../models/user.model");
 
 module.exports = {
-	updateBoard: async (userEmail, userBoard) => {
+	updateBoard: async (username, userBoard) => {
 		const result = {
 			status: null,
 			message: null,
 			data: null,
 		};
 		try {
-			let user = await User.findOne({ where: { email: userEmail } });
+			let user = await User.findOne({ where: { username: username } });
 			result.status = 200;
 			result.message = "Board update successful";
 			user.board = userBoard;
@@ -17,6 +17,9 @@ module.exports = {
 			return result;
 		} catch (err) {
 			console.log("user login error caught", err);
+			result.status = 400;
+			result.message = "Error - unable to update board";
+			return result;
 		}
 	},
 	addCard: async (userEmail, id, card) => {
