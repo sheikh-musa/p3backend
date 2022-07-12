@@ -4,6 +4,7 @@ class BoardController {
 	async updateBoard(req, res) {
 		try {
 			const board = req.body.board;
+			console.log(board);
 			const login = req.user.login;
 			console.log(req.user);
 			const result = await boardService.updateBoard(login, board);
